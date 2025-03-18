@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Task
 
 
@@ -14,3 +14,9 @@ def add_task(request):
         Task.objects.create(title=title, description=description)
         return redirect("task_list")
     return render(request, "tasks/add_task.html")
+
+
+def toggle_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    task.toggle_completed()
+    return redirect("task_list")
