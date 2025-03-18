@@ -17,6 +17,12 @@
                     <strong>{{ task.title }}</strong>
                     <p>{{ task.description }}</p>
                     <small>Created at: {{ task.created_at }}</small>
+                    <form action="{% url 'toggle_task' task.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit">
+                            {% if task.completed %}Mark Incomplete{% else %}Mark Complete{% endif %}
+                        </button>
+                    </form>
                 </li>
             {% endfor %}
         </ul>
