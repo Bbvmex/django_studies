@@ -17,9 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
+from apps.tasks.views import signup
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("hello/", include("apps.hello.urls")),
     path("tasks/", include("apps.tasks.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/signup/", signup, name="signup"),
 ]
