@@ -23,8 +23,9 @@ def add_task(request):
     return render(request, "tasks/add_task.html")
 
 
+@login_required
 def toggle_task(request, task_id):
-    task = get_object_or_404(Task, id=task_id)
+    task = get_object_or_404(Task, id=task_id, user=request.user)
     task.toggle_completed()
     return redirect("task_list")
 
