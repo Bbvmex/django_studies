@@ -2,7 +2,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from rest_framework import generics, permissions
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics, permissions, filters
 from .models import Task
 from .serializers import TaskSerializer
 
@@ -47,6 +48,9 @@ def signup(request):
 class TaskListCreateView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ["completed"]
+    search_fields = ["title", "description"]
 
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
