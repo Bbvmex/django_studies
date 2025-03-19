@@ -147,3 +147,10 @@ REST_FRAMEWORK = {
         "user": "1000/day",  # 1000 requests per day for authenticated users
     },
 }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "location": "unique-snowflake",
+    }
+}
