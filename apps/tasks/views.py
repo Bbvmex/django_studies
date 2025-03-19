@@ -48,9 +48,14 @@ def signup(request):
 class TaskListCreateView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated]
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
     filterset_fields = ["completed"]
     search_fields = ["title", "description"]
+    ordering_fields = ['created_at', 'title']
 
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
